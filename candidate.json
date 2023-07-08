@@ -1,0 +1,47 @@
+[
+    {
+        "id":1,
+        "name": "Roshan" ,
+        "age": 20 ,
+        "image": "images/sohan.jpg",
+        "skill": "web development" ,
+        "location": "Pune" ,
+        "experience": 2 
+    },
+    {
+        "id":2,
+        "name": "Sohan",
+        "age": 22,
+        "image": "images/shreyash.png",
+        "skill": "Cloud Computing" ,
+        "location": "Pune",
+        "experience": 2 
+    },
+    {
+        "id":3,
+        "name": "Ashutosh" ,
+        "age": 21,
+        "image":"images/mihir.jpg" ,
+        "skill": "web development" ,
+        "location": "Mumbai",
+        "experience": 1 
+    },
+    {
+        "id":4,
+        "name": "Mayur",
+        "age": 25 ,
+        "image": "images/mayur.jpg",
+        "skill": "web development",
+        "location":"Mumbai" ,
+        "experience": 1
+    },
+    {
+        "id":5,
+        "name": "Shreyash" ,
+        "age": 22 ,
+        "image": "images/naman.jpg" ,
+        "skill": "Cloud Computing",
+        "location": "Pune",
+        "experience": 2
+    }
+]

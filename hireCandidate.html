@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House of HR</title>
+
+    <link rel="stylesheet" href="style.css">
+
+
+
+    <!-- fontawsome link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<style>
+    .selectSection {
+        display: flex;
+        justify-content: center;
+        vertical-align: middle;
+        margin: 40px;
+    }
+
+    .selectSection select {
+        width: 350px;
+        margin: 0px 20px;
+        height: 40px;
+        border-radius: 15px;
+    }
+
+
+    .selectSection label {
+        margin-top: 10px;
+    }
+
+    .sortedcandidates .parts {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sortedcandidates .parts .card {
+        width: 230px;
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .sortedcandidates .parts .card img {
+        width: 200px;
+    }
+
+    .sortedcandidates .parts .card strong {
+        font-size: 10px;
+    }
+
+    .sortedcandidates .parts .card p {
+        font-size: 20px;
+    }
+</style>
+
+<body onload="loadData()">
+    <nav class="navbar">
+
+        <div class="nav-brand">House of HR</div>
+
+        <input type="checkbox" name="check" id="check">
+        <label for="check" class="checkbtn"> <i class="fa-solid fa-bars"></i></label>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#contact-section">Contact </a></li>
+            <li><a href="/login.html" id="anchor_log"><button class="btn" id="login">Login</button></a></li>
+        </ul>
+
+    </nav>
+
+    <div class="selectSection">
+        <label for="candidates">
+            <h3>Find Talent By </h3>
+        </label>
+
+        <select name="candidate" id="candidates" onchange="sorting()">
+            <option> All </option>
+            <optgroup value="skill" label="Skill">
+                <option value="Web">Web Development</option>
+                <option value="cloud">Cloud Computing</option>
+            </optgroup>
+            <optgroup value="location" label="location">
+                <option value="Pune">Pune</option>
+                <option value="Mumbai">Mumbai</option>
+            </optgroup>
+            <optgroup value="experience" label="experience">
+                <option value="one">1 yr</option>
+                <option value="two">2 yr</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="sortedcandidates" id="sortedcandidates">
+        <div class="parts" id="parts">
+
+        </div>
+    </div>
+
+    <script>
+
+        let option = document.getElementById("candidates")
+        let sorted = document.querySelector("#parts")
+        let optionValue;
+
+        function loadData() {
+            fetch("candidate.json").then((response) => {
+                return response.json();
+            }).then((data) => {
+                dataOnload(data);
+            })
+
+            function dataOnload(data) {
+                sorted.innerHTML = " "
+                for (let i = 0; i < data.length; i++) {
+                    let div = document.createElement("section")
+                    div.innerHTML = `
+                            <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                            `
+                    sorted.appendChild(div)
+                }
+            }
+        }
+
+        function sorting() {
+            optionValue = option.value;
+            fetch("candidate.json").then((response) => {
+                return response.json();
+            }).then((data) => {
+                appendData(data);
+            })
+            function appendData(data) {
+
+                if (optionValue == "All") {
+                    sorted.innerHTML = " "
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        div.innerHTML = `
+                        <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                            `
+                        sorted.appendChild(div)
+                    }
+                }
+                else if (optionValue == "Web") {
+                    sorted.innerHTML = " ";
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        if (data[i].skill == "web development") {
+                            div.innerHTML = `
+                            <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                    `
+
+                        }
+                        sorted.appendChild(div)
+                    }
+
+
+                }
+                else if (optionValue == "cloud") {
+                    sorted.innerHTML = " ";
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        if (data[i].skill == "Cloud Computing") {
+                            div.innerHTML = `
+                           <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                    `
+
+                        }
+                        sorted.appendChild(div)
+                    }
+                }
+                else if (optionValue == "Pune") {
+                    sorted.innerHTML = " ";
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        if (data[i].location == "Pune") {
+                            div.innerHTML = `
+                            <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                    `
+                        }
+                        sorted.appendChild(div)
+                    }
+                }
+                else if (optionValue == "Mumbai") {
+                    sorted.innerHTML = " ";
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        if (data[i].location == "Mumbai") {
+                            div.innerHTML = `
+                            <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                    `
+                        }
+                        sorted.appendChild(div)
+                    }
+                }
+                else if (optionValue == "one") {
+                    sorted.innerHTML = " ";
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        if (data[i].experience == 1) {
+                            div.innerHTML = `
+                            <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                    `
+                        }
+                        sorted.appendChild(div)
+                    }
+                }
+                else if (optionValue == "two") {
+                    sorted.innerHTML = " ";
+                    for (let i = 0; i < data.length; i++) {
+                        let div = document.createElement("section")
+                        if (data[i].experience == 2) {
+                            div.innerHTML = `
+                            <div class="card">
+                                <div class="card-img"><img src="${data[i].image}" width=300px  alt=""></div>
+                                <div class="card-body">
+                                    <p><strong>Id: </strong>${data[i].id}</p>
+                                    <h5><strong>Name: </strong>${data[i].name}</h5>
+                                    <p "><strong>Age : </strong>${data[i].age}</p>
+                                    <p><strong>Skill : </strong> ${data[i].skill}</p>
+                                    <p "><strong>Expirience : </strong>${data[i].experience}</p>
+                                    <p "><strong>Location : </strong>${data[i].location}</p>
+                                </div>
+                            </div>
+                    `
+                        }
+                        sorted.appendChild(div)
+                    }
+                }
+
+
+
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
